@@ -5,6 +5,9 @@ let cursors;
 
 let config = {
     type: Phaser.AUTO,
+    render: {
+        pixelArt: true
+    },
     width: 320,
     height: 240,
     physics: {
