@@ -16,6 +16,7 @@ let config = {
             debug: true
         }
     },
+    zoom: 2,
     scene: [ PlayScene1 ]
 };
 
