@@ -11,6 +11,9 @@ class PlayScene1 extends Phaser.Scene{
         this.load.atlas('cheryl', 'cherylsheet.png', 'cheryl.json');
         this.load.image('tilesetImage', 'tileset1_3.png');
         this.load.tilemapTiledJSON('tilemapJSON', 'tileset1.json');
+        this.load.image('artifact1', 'artifact1.png');
+        this.load.image('artifact2', 'artifact2.png');
+        this.load.image('artifact3', 'artifact3.png');
 
     }
 
@@ -35,6 +38,8 @@ class PlayScene1 extends Phaser.Scene{
         const spawn = map.findObject('Spawn', obj => obj.name === 'Spawn');
 
         this.cheryl = this.physics.add.sprite(360, 470, 'cheryl', 0).setDepth(60);
+        this.artifact1 = new Artifacts(this, 144, 304, 'artifact1');
+        
 
 
         //create animation
@@ -45,26 +50,35 @@ class PlayScene1 extends Phaser.Scene{
                 start: 1,
                 end: 4,
             }),
-            frameRate: 5,
+            frameRate: 6.5,
             repeat: -1
         });
 
         this.anims.create({
-            key:'runFront',
+            key:'runSide',
             frames: this.anims.generateFrameNames('cheryl', {
                 prefix: 'cheryl_side',
                 start: 1,
                 end: 4,
             }),
+            frameRate: 6.5,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'stand',
+            frames: this.anims.generateFrameNames('cheryl', {
+                prefix: 'cheryl',
+                start: 1,
+                end: 1,
+            }),
             frameRate: 5,
             repeat: -1
         });
-/*
-        this.anims.create({
-            key: 'stand'
-        })
 
-*/
+        this.cheryl.anims.play('stand', true);
+
+
 
         this.cheryl.body.setCollideWorldBounds(true);
 
@@ -96,16 +110,23 @@ class PlayScene1 extends Phaser.Scene{
 
     update(){
         this.direction = new Phaser.Math.Vector2(0);
+        
 
         if (this.cursors.left.isDown){
             this.direction.x = -1;
+            this.cheryl.setFlipX(false);
+            this.cheryl.anims.play('runSide', true);
         } else if (this.cursors.right.isDown){
             this.direction.x = 1;
+            this.cheryl.setFlipX(true);
+            this.cheryl.anims.play('runSide', true);
         }
         if (this.cursors.up.isDown){
             this.direction.y = -1;
+            this.cheryl.anims.play('runFront', true);
         } else if (this.cursors.down.isDown){
             this.direction.y = 1;
+            this.cheryl.anims.play('runFront', true);
         }
 
         this.direction.normalize()

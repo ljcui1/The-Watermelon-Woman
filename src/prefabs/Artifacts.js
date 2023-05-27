@@ -1,6 +1,6 @@
 // Artifacts prefab
 class Artifacts extends Phaser.GameObjects.Sprite{
-    constructor(scene, x, y, texture, photo){
+    constructor(scene, x, y, texture){
         super(scene, x, y, texture);
         scene.add.existing(this);
         this.looked = false;
