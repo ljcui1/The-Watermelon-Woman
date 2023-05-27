@@ -17,9 +17,9 @@ let config = {
         }
     },
     zoom: 2,
-    scene: [ PlayScene1 ]
+    scene: [ Menu, PlayScene1 ]
 };
 
 let game = new Phaser.Game(config);
 
-let keyE;
+let keyE, keyUP, keyDOWN, keyENTER;
