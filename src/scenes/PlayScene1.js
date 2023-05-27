@@ -31,7 +31,6 @@ class PlayScene1 extends Phaser.Scene{
         const trees3 = map.createLayer('trees', tileset, 0, 0).setDepth(50);
         const trees2 = map.createLayer('trees2', tileset, 0, 0).setDepth(50);
         const trees = map.createLayer('trees3', tileset, 0, 0).setDepth(50);
-        const artifact = map.createLayer('artifact', tileset, 0, 0).setDepth(60);
 
         const spawn = map.findObject('Spawn', obj => obj.name === 'Spawn');
 
@@ -60,8 +59,12 @@ class PlayScene1 extends Phaser.Scene{
             frameRate: 5,
             repeat: -1
         });
+/*
+        this.anims.create({
+            key: 'stand'
+        })
 
-
+*/
 
         this.cheryl.body.setCollideWorldBounds(true);
 
@@ -87,6 +90,8 @@ class PlayScene1 extends Phaser.Scene{
         //input
         this.cursors = this.input.keyboard.createCursorKeys();
 
+        keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+
     }
 
     update(){
@@ -105,6 +110,13 @@ class PlayScene1 extends Phaser.Scene{
 
         this.direction.normalize()
         this.cheryl.setVelocity(this.VEL * this.direction.x, this.VEL * this.direction.y);
+
+        
+        
+
+    }
+
+    countCheck(){
 
     }
 
