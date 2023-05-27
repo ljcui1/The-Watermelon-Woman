@@ -26,18 +26,18 @@ class Menu extends Phaser.Scene {
         if(select == 0){
             this.play.setFrame(1);
             this.credits.setFrame(0);
-            if(keyDOWN.isDown){
+            if(Phaser.Input.Keyboard.JustDown(keyDOWN)){
                 select = 1;
                 this.credits.setFrame(1);
                 this.play.setFrame(0);
                 console.log(select);
-            }else if (keyENTER.isDown){
+            }else if (Phaser.Input.Keyboard.JustDown(keyENTER)){
                 this.scene.start('playScene1');
             }
         }else if (select == 1){
             this.credits.setFrame(1);
             this.play.setFrame(0);
-            if(keyUP.isDown){
+            if(Phaser.Input.Keyboard.JustDown(keyUP)){
                 select = 0;
                 this.play.setFrame(1);
                 this.credits.setFrame(0);
