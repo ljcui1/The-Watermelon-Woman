@@ -42,7 +42,7 @@ class PlayScene1 extends Phaser.Scene{
         this.cheryl = this.physics.add.sprite(360, 470, 'cheryl', 0).setDepth(60);
         this.photo1 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo1').setDepth(110);
         this.photo1.alpha = 0;
-        this.artifact1 = new Artifacts(this, 144, 304, 'artifact1', this.photo1).setDepth(100);
+        this.artifact1 = new Artifacts(this, 144, 310, 'artifact1', this.photo1).setDepth(100);
 
         let countConfig = {
             fontFamily: 'Courier',
@@ -53,10 +53,11 @@ class PlayScene1 extends Phaser.Scene{
                 padding: {
                     top: 5,
                     bottom: 5,
-                }
+                },
+                alpha: 0.75
         }
 
-        this.count = this.add.text(this.cameras.x/2, this.cameras.y/2, counter + "/8", countConfig);
+        this.count = this.add.text(270, 10, counter + "/8", countConfig).setScrollFactor(0).setDepth(200);
         
 
 
@@ -94,7 +95,7 @@ class PlayScene1 extends Phaser.Scene{
             repeat: -1
         });
 
-        this.cheryl.anims.play('stand', true);
+        //this.cheryl.anims.play('stand', true);
 
 
 
@@ -123,11 +124,15 @@ class PlayScene1 extends Phaser.Scene{
         this.cursors = this.input.keyboard.createCursorKeys();
 
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        this.physics.add.overlap(this.cheryl, this.artifact1, this.artifactPopUp(this.artifact1));
+        this.physics.add.collider(this.cheryl, this.artifact1, this.countCheck(this.artifact1));
 
     }
 
     update(){
         this.direction = new Phaser.Math.Vector2(0);
+
+        this.cheryl.anims.play('stand', true);
         
 
         if (this.cursors.left.isDown){
@@ -161,23 +166,42 @@ class PlayScene1 extends Phaser.Scene{
         this.direction.normalize()
         this.cheryl.setVelocity(this.VEL * this.direction.x, this.VEL * this.direction.y);
 
-        this.artifact1.update(this.cheryl);
-        this.countCheck(this.cheryl, this.artifact1);
+        
+
+        //.artifact1.update(this.cheryl);
+        //this.countCheck(this.cheryl, this.artifact1);
         
 
     }
 
-    countCheck(cheryl, artifact){
-        if((cheryl.x == artifact.x) && (cheryl.y == (artifact.y + 16))){
-            if(keyE.isDown){
-                artifact.photo.alpha = 1;
-                if(artifact.seen == false){
-                    artifact.seen = true;
-                    this.counter += 1;
-                }
-                
+    artifactPopUp(artifact){
+        let info = this.add.text(artifact.x, artifact.y - 16, "E to interact", {
+            color: "#000000",
+            backgroundColor: "#ffffff",
+            alpha: 0.5,
+            fontSize: 10,
+            
+        }).setOrigin(0.5, 0);
+        info.setDepth(200);
+        info.alpha = 0.5;
+    }
+
+   /* if ((sprite.x == this.x) && (sprite.y == (this.y + 16))){
+        info.alpha = 0.5;
+    }else{
+        info.alpha = 0;
+    }*/
+
+    countCheck(artifact){
+        if(keyE.isDown){
+            artifact.photo.alpha = 1;
+            if(artifact.seen == false){
+                artifact.seen = true;
+                this.counter += 1;
             }
+                
         }
+        
     }
 
     

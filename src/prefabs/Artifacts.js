@@ -12,17 +12,7 @@ class Artifacts extends Phaser.GameObjects.Sprite{
 
 
     update(sprite){
-        let info = this.scene.add.text(this.x, this.y - 16, "E to interact", {
-            color: "#000000",
-            backgroundColor: "#ffffff",
-            
-        });
-
-        if ((sprite.x == this.x) && (sprite.y == (this.y + 16))){
-            info.alpha = 0.5;
-        }else{
-            info.alpha = 0;
-        }
+        
 
 
 
