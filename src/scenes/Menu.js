@@ -1,6 +1,7 @@
 class Menu extends Phaser.Scene {
     constructor(){
         super("menuScene");
+       
     }
 
     preload(){
@@ -11,6 +12,8 @@ class Menu extends Phaser.Scene {
     }
 
     create(){
+
+        this.select = 0;
         this.background = this.add.sprite(0, 0, 'background').setOrigin(0,0);
         this.play = this.add.sprite(210, 35, 'play', 0).setOrigin(0.5, 0.5);
         this.credits = this.add.sprite(210, 80, 'credits', 0).setOrigin(0.5, 0.5);
@@ -22,26 +25,26 @@ class Menu extends Phaser.Scene {
     }
 
     update(){
-        let select = 0;
-        if(select == 0){
+        
+        if(this.select == 0){
             this.play.setFrame(1);
             this.credits.setFrame(0);
             if(Phaser.Input.Keyboard.JustDown(keyDOWN)){
-                select = 1;
+                this.select = 1;
                 this.credits.setFrame(1);
                 this.play.setFrame(0);
-                console.log(select);
+                console.log(this.select);
             }else if (Phaser.Input.Keyboard.JustDown(keyENTER)){
                 this.scene.start('playScene1');
             }
-        }else if (select == 1){
+        }else if (this.select == 1){
             this.credits.setFrame(1);
             this.play.setFrame(0);
             if(Phaser.Input.Keyboard.JustDown(keyUP)){
-                select = 0;
+                this.select = 0;
                 this.play.setFrame(1);
                 this.credits.setFrame(0);
-                console.log(select);
+                console.log(this.select);
             }
         }
 

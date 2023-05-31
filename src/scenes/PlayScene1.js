@@ -69,7 +69,7 @@ class PlayScene1 extends Phaser.Scene{
                 start: 1,
                 end: 4,
             }),
-            frameRate: 6.5,
+            frameRate: 6,
             repeat: -1
         });
 
@@ -80,7 +80,7 @@ class PlayScene1 extends Phaser.Scene{
                 start: 1,
                 end: 4,
             }),
-            frameRate: 6.5,
+            frameRate: 6,
             repeat: -1
         });
 
