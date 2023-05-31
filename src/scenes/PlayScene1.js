@@ -119,6 +119,7 @@ class PlayScene1 extends Phaser.Scene{
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.cheryl, true, 0.25, 0.25);
         this.physics.world.bounds.setTo(0, 0, map.widthInPixels, map.heightInPixels);
+        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels, true, true, true, true);
 
         //input
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -132,7 +133,7 @@ class PlayScene1 extends Phaser.Scene{
     update(){
         this.direction = new Phaser.Math.Vector2(0);
 
-        this.cheryl.anims.play('stand', true);
+        this.cheryl.anims.play('stand');
         
 
         if (this.cursors.left.isDown){
@@ -170,6 +171,12 @@ class PlayScene1 extends Phaser.Scene{
 
         //.artifact1.update(this.cheryl);
         //this.countCheck(this.cheryl, this.artifact1);
+        if(this.counter == 8){
+            this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels, true, true, false, true);
+            if (this.cheryl.y < 0){
+                this.scene.start('playScene2');
+            }
+        }
         
 
     }
