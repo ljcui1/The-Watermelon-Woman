@@ -43,6 +43,14 @@ class PlayScene1 extends Phaser.Scene{
         this.photo1 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo1').setDepth(110);
         this.photo1.alpha = 0;
         this.artifact1 = new Artifacts(this, 144, 310, 'artifact1', this.photo1).setDepth(100);
+        //this.artifact1.body.setSize(32, 32, true).setOrigin(0.5, 0);
+
+        this.artifact1.on('addedtoscene', () => {
+            this.artifact1.body.setSize(32, 32, true).setOrigin(0.5, 0);
+          });
+
+        
+        
 
         let countConfig = {
             fontFamily: 'Courier',
@@ -117,7 +125,7 @@ class PlayScene1 extends Phaser.Scene{
 
         //cameras
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.startFollow(this.cheryl, true, 0.25, 0.25);
+        this.cameras.main.startFollow(this.cheryl, false, 0.25, 0.25);
         this.physics.world.bounds.setTo(0, 0, map.widthInPixels, map.heightInPixels);
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels, true, true, true, true);
 
@@ -125,15 +133,15 @@ class PlayScene1 extends Phaser.Scene{
         this.cursors = this.input.keyboard.createCursorKeys();
 
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.physics.add.overlap(this.cheryl, this.artifact1, this.artifactPopUp(this.artifact1));
-        this.physics.add.collider(this.cheryl, this.artifact1, this.countCheck(this.artifact1));
+        this.physics.add.overlap(this.cheryl, this.artifact1.body, this.countCheck(this.artifact1));
+        
 
     }
 
     update(){
         this.direction = new Phaser.Math.Vector2(0);
 
-        this.cheryl.anims.play('stand');
+        //this.cheryl.anims.play('stand');
         
 
         if (this.cursors.left.isDown){
@@ -151,6 +159,8 @@ class PlayScene1 extends Phaser.Scene{
         } else if (this.cursors.down.isDown){
             this.direction.y = 1;
             this.cheryl.anims.play('runFront', true);
+        } else {
+            this.cheryl.anims.play('stand');
         }
 /*
         if (this.cursors.left.onUp){
@@ -167,7 +177,7 @@ class PlayScene1 extends Phaser.Scene{
         this.direction.normalize()
         this.cheryl.setVelocity(this.VEL * this.direction.x, this.VEL * this.direction.y);
 
-        
+        this.artifactPopUp(this.artifact1);      
 
         //.artifact1.update(this.cheryl);
         //this.countCheck(this.cheryl, this.artifact1);
@@ -190,7 +200,11 @@ class PlayScene1 extends Phaser.Scene{
             
         }).setOrigin(0.5, 0);
         info.setDepth(200);
-        info.alpha = 0.5;
+        info.alpha = 0;
+
+        this.physics.add.overlap(this.cheryl, artifact.body, () => {
+            info.alpha = 0.5;
+        });
     }
 
    /* if ((sprite.x == this.x) && (sprite.y == (this.y + 16))){

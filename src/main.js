@@ -17,7 +17,11 @@ let config = {
         }
     },
     zoom: 2,
-    scene: [ Menu, PlayScene1 ]
+    scene: [ Menu, PlayScene1 ],
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    }
 };
 
 let game = new Phaser.Game(config);
