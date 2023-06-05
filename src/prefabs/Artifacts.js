@@ -4,8 +4,9 @@ class Artifacts extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, texture);
         scene.add.existing(this);
         this.seen = false;
-        this.setPipeline('TextureTintPipeline');
+        //this.setPipeline('TextureTintPipeline');
         
+        this.photo = photo;
 
        
 
