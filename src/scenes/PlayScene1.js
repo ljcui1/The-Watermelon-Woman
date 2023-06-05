@@ -60,13 +60,13 @@ class PlayScene1 extends Phaser.Scene{
         const spawn = map.findObject('Spawn', obj => obj.name === 'Spawn');
 
         this.cheryl = this.physics.add.sprite(360, 470, 'cheryl', 0).setDepth(40);
-        this.photo1 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo1').setDepth(110);
+        this.photo1 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo1').setScrollFactor(0).setDepth(110);
         this.photo1.setVisible(false);
-        this.photo2 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo2').setDepth(110);
+        this.photo2 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo2').setScrollFactor(0).setDepth(110);
         this.photo2.setVisible(false);
-        this.photo3 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo3').setDepth(110);
+        this.photo3 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo3').setScrollFactor(0).setDepth(110);
         this.photo3.setVisible(false);
-        this.photo4 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo4').setDepth(110);
+        this.photo4 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo4').setScrollFactor(0).setDepth(110);
         this.photo4.setVisible(false);
         this.artifact1 = this.physics.add.sprite(144, 300, 'artifact1').setDepth(100);
         this.artifact2 = this.physics.add.sprite(112, 16, 'artifact2').setDepth(100);
@@ -174,6 +174,7 @@ class PlayScene1 extends Phaser.Scene{
         this.cursors = this.input.keyboard.createCursorKeys();
 
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         //this.physics.add.overlap(this.cheryl, this.artifact1.body, this.countCheck(this.artifact1));
         
 
@@ -232,11 +233,12 @@ class PlayScene1 extends Phaser.Scene{
             fontSize: 10,
             
         }).setOrigin(0.5, 0);
-        info.setDepth(200);
+        info.setDepth(100);
         info.alpha = 0.5;
         info.setVisible(false);
 
         this.physics.add.overlap(this.cheryl, artifact.body, () => {
+            this.countCheck(artifact);
             info.setVisible(true);
         });
     }
@@ -251,6 +253,9 @@ class PlayScene1 extends Phaser.Scene{
                     this.photo1Seen = true;
                     this.counter += 1;
                 }
+                if(keyESC.isDown){
+                    this.photo1.setVisible(false);
+                }
                 
             } else if (thing == this.artifact2){
                 this.photo2.setVisible(true);
@@ -258,17 +263,26 @@ class PlayScene1 extends Phaser.Scene{
                     this.photo2Seen = true;
                     this.counter += 1;
                 }
+                if(keyESC.isDown){
+                    this.photo2.setVisible(false);
+                }
             } else if (thing == this.artifact3){
                 this.photo3.setVisible(true);
                 if(this.photo3Seen == false){
                     this.photo3Seen = true;
                     this.counter += 1;
                 }
+                if(keyESC.isDown){
+                    this.photo3.setVisible(false);
+                }
             } else if (thing == this.artifact4){
                 this.photo4.setVisible(true);
                 if(this.photo4Seen == false){
                     this.photo4Seen = true;
                     this.counter += 1;
+                }
+                if(keyESC.isDown){
+                    this.photo4.setVisible(false);
                 }
             }
             
