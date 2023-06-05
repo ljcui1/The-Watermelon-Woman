@@ -37,7 +37,7 @@ class PlayScene1 extends Phaser.Scene{
 
     create(){
 
-        this.scene.start('playScene2');
+        //this.scene.start('playScene2');
 
         let counter = 0;
         const map = this.add.tilemap('tilemapJSON');
@@ -251,6 +251,7 @@ class PlayScene1 extends Phaser.Scene{
                     this.photo1Seen = true;
                     this.counter += 1;
                 }
+                
             } else if (thing == this.artifact2){
                 this.photo2.setVisible(true);
                 if(this.photo2Seen == false){
