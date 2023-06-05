@@ -17,7 +17,7 @@ let config = {
         }
     },
     zoom: 2,
-    scene: [ Menu, PlayScene1 ],
+    scene: [ Menu, PlayScene1, PlayScene2 ],
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
@@ -26,4 +26,4 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-let keyE, keyUP, keyDOWN, keyENTER;
+let keyE, keyUP, keyDOWN, keyENTER, keySPACE;

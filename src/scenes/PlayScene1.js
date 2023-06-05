@@ -36,6 +36,9 @@ class PlayScene1 extends Phaser.Scene{
     }
 
     create(){
+
+        this.scene.start('playScene2');
+
         let counter = 0;
         const map = this.add.tilemap('tilemapJSON');
         const tileset = map.addTilesetImage('tileset1_3', 
