@@ -37,7 +37,7 @@ class PlayScene1 extends Phaser.Scene{
 
     create(){
 
-        //this.scene.start('playScene2');
+        this.scene.start('playScene2');
 
         let counter = 0;
         const map = this.add.tilemap('tilemapJSON');
@@ -68,21 +68,19 @@ class PlayScene1 extends Phaser.Scene{
         this.photo3.setVisible(false);
         this.photo4 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo4').setScrollFactor(0).setDepth(110);
         this.photo4.setVisible(false);
-        this.artifact1 = this.physics.add.sprite(144, 300, 'artifact1').setDepth(100);
+        /*this.artifact1 = this.physics.add.sprite(144, 300, 'artifact1').setDepth(100);
         this.artifact2 = this.physics.add.sprite(112, 16, 'artifact2').setDepth(100);
         this.artifact3 = this.physics.add.sprite(592, 304, 'artifact3').setDepth(100);
-        this.artifact4 = this.physics.add.sprite(352, 16, 'artifact4').setDepth(100);
+        this.artifact4 = this.physics.add.sprite(352, 16, 'artifact4').setDepth(100);*/
         this.npc1 = this.physics.add.sprite(432, 80, 'npc1').setDepth(100);
         this.npc2 = this.physics.add.sprite(112, 208, 'npc2').setDepth(100);
         this.npc3 = this.physics.add.sprite(112, 176, 'npc3').setDepth(100);
         this.npc4 = this.physics.add.sprite(432, 320, 'npc4').setDepth(100);
-        //this.artifact1 = new Artifacts(this, 144, 310, 'artifact1', this.photo1).setDepth(100);
-        //this.artifact1.body.setSize(32, 32, true).setOrigin(0.5, 0);
-        this.artifact1.setBodySize(32, 40, true).setOrigin(0.5, 0);
-        this.artifact2.setBodySize(32, 40, true).setOrigin(0.5, 0);
-        this.artifact3.setBodySize(32, 40, true).setOrigin(0.5, 0);
-        this.artifact4.setBodySize(32, 40, true).setOrigin(0.5, 0);
-
+        this.artifact1 = new Artifacts(this, 144, 310, 'artifact1', this.photo1).setDepth(100);
+        this.artifact2 = new Artifacts(this, 112, 21, 'artifact2', this.photo2).setDepth(100);
+        this.artifact3 = new Artifacts(this, 592, 309, 'artifact3', this.photo3).setDepth(100);
+        this.artifact4 = new Artifacts(this, 432, 325, 'artifact4', this.photo4).setDepth(100);
+       
         this.artifact4.setVisible(false);
 
         this.npc1.setBodySize(32, 32, true).setOrigin(0, 0);
@@ -176,6 +174,12 @@ class PlayScene1 extends Phaser.Scene{
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         //this.physics.add.overlap(this.cheryl, this.artifact1.body, this.countCheck(this.artifact1));
+
+        this.artifact1.info.setVisible(false);
+        this.physics.add.overlap(this.cheryl, this.artifact1.body, () => {
+            this.countCheck(this.artifact1);
+            this.artifact1.info.setVisible(true);
+        });
         
 
     }
@@ -183,7 +187,7 @@ class PlayScene1 extends Phaser.Scene{
     update(){
         this.direction = new Phaser.Math.Vector2(0);
 
-        //this.cheryl.anims.play('stand');
+        this.artifact1.info.setVisible(false);
         
 
         if (this.cursors.left.isDown){
@@ -207,10 +211,12 @@ class PlayScene1 extends Phaser.Scene{
         this.direction.normalize()
         this.cheryl.setVelocity(this.VEL * this.direction.x, this.VEL * this.direction.y);
 
-        this.artifactPopUp(this.artifact1);      
+        //this.artifactPopUp(this.artifact1);      
 
         //.artifact1.update(this.cheryl);
         //this.countCheck(this.cheryl, this.artifact1);
+
+
         if(this.counter == 7){
             this.artifact4.setVisible(true);
         }
