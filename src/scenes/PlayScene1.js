@@ -47,7 +47,17 @@ class PlayScene1 extends Phaser.Scene{
 
         //add layer
         const street = map.createLayer('street', tileset, 0, 0);
+
         const sidewalk = map.createLayer('sidewalk', tileset, 0, 0);
+
+        this.instruct = this.add.text(360, 432, 'Find information\nabout the\nWatermelon Woman', {
+            fontSize: 15,
+            color: '#ffffff',
+            align: 'center',
+
+
+        }).setOrigin(0.5, 0.5);
+
         const buildings = map.createLayer('buildings', tileset, 0, 0).setDepth(50);
         const buildingbase = map.createLayer('buildingbase', tileset, 0, 0).setDepth(1);
         const deco = map.createLayer('deco', tileset, 0, 0).setDepth(50);
@@ -71,15 +81,23 @@ class PlayScene1 extends Phaser.Scene{
         /*this.artifact1 = this.physics.add.sprite(144, 300, 'artifact1').setDepth(100);
         this.artifact2 = this.physics.add.sprite(112, 16, 'artifact2').setDepth(100);
         this.artifact3 = this.physics.add.sprite(592, 304, 'artifact3').setDepth(100);
-        this.artifact4 = this.physics.add.sprite(352, 16, 'artifact4').setDepth(100);*/
+        this.artifact4 = this.physics.add.sprite(352, 16, 'artifact4').setDepth(100);
         this.npc1 = this.physics.add.sprite(432, 80, 'npc1').setDepth(100);
         this.npc2 = this.physics.add.sprite(112, 208, 'npc2').setDepth(100);
         this.npc3 = this.physics.add.sprite(112, 176, 'npc3').setDepth(100);
-        this.npc4 = this.physics.add.sprite(432, 320, 'npc4').setDepth(100);
+        this.npc4 = this.physics.add.sprite(432, 320, 'npc4').setDepth(100);*/
+
+        this.peopleGroup = this.add.group({runChildUpdate: true});
+        this.npc1 = new People(this, 432, 80, 'npc1', "Watermelon Woman...\nlike Aunt Jemima?").setDepth(100);
+        this.npc2 = new People(this, 112, 208, 'npc2', "Is that the\nfruit lady?").setDepth(100);
+        this.npc3 = new People(this, 112, 176, 'npc3', "No, that's Rosie Perez.").setDepth(100);
+        this.npc4 = new People(this, 432, 320, 'npc4', "...no?").setDepth(100);
+        this.peopleGroup.addMultiple([this.npc1, this.npc2, this.npc3, this.npc4]);
+
         this.artifactGroup = this.add.group({runChildUpdate: true});
         this.artifact1 = new Artifacts(this, 144, 305, 'artifact1', this.photo1).setDepth(100);
         this.artifact2 = new Artifacts(this, 112, 16, 'artifact2', this.photo2).setDepth(100);
-        this.artifact3 = new Artifacts(this, 592, 304, 'artifact3', this.photo3).setDepth(100);
+        this.artifact3 = new Artifacts(this, 600, 304, 'artifact3', this.photo3).setDepth(100);
         this.artifact4 = new Artifacts(this, 352, 16, 'artifact4', this.photo4).setDepth(100);
        
         this.artifactGroup.addMultiple([this.artifact1, this.artifact2, this.artifact3, this.artifact4]);
@@ -191,6 +209,18 @@ class PlayScene1 extends Phaser.Scene{
             }
             //artifact.info.setVisible(true);
         }, null, this);
+
+        this.physics.add.overlap(this.cheryl, this.peopleGroup, (cheryl, person) => {
+            person.popUp(this);
+            console.log(person.seen);
+            if (person.seen == false){
+                person.seen = true;
+                console.log(person.seen);
+                this.counter += 1;
+                console.log(this.counter)
+            }
+            //artifact.info.setVisible(true);
+        }, null, this);
         
 
     }
@@ -234,10 +264,12 @@ class PlayScene1 extends Phaser.Scene{
         }
 
         if(this.counter == 8){
-            this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels, true, true, false, true);
+            this.physics.world.setBounds(0, 0, 624, 464, true, true, false, true);
             if (this.cheryl.y < 0){
                 this.scene.start('playScene2');
             }
+            this.instruct.setText('^\nproceed');
+            this.instruct.setPosition(10);
         }
         
 
