@@ -10,10 +10,10 @@ class Artifacts extends Phaser.Physics.Arcade.Sprite{
         this.photo = photo;
         this.photo.setVisible(false);
 
-        this.info = this.scene.add.text(this.x, this.y - 16, "E to interact", {
+        this.info = scene.add.text(this.x, this.y - 16, "E to interact", {
             color: "#000000",
             backgroundColor: "#ffffff",
-            alpha: 0.5,
+            //alpha: 0.5,
             fontSize: 10,
             
         }).setOrigin(0.5, 0);
@@ -29,6 +29,13 @@ class Artifacts extends Phaser.Physics.Arcade.Sprite{
 
     }
 
+    popUp(scene){
+        this.photo.setVisible(true);
+        //this.seen = true;
+   
+    }
+
+
 
     update(sprite){
         /*if (this.scene.physics.overlap(this, sprite)){
@@ -36,6 +43,9 @@ class Artifacts extends Phaser.Physics.Arcade.Sprite{
         } else {
             this.info.setVisible(false);
         }*/
+
+        this.photo.setVisible(false);
+        
 
         
         

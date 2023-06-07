@@ -37,9 +37,9 @@ class PlayScene1 extends Phaser.Scene{
 
     create(){
 
-        this.scene.start('playScene2');
+        //this.scene.start('playScene2');
 
-        let counter = 0;
+        this.counter = 0;
         const map = this.add.tilemap('tilemapJSON');
         const tileset = map.addTilesetImage('tileset1_3', 
         'tilesetImage');
@@ -61,13 +61,13 @@ class PlayScene1 extends Phaser.Scene{
 
         this.cheryl = this.physics.add.sprite(360, 470, 'cheryl', 0).setDepth(40);
         this.photo1 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo1').setScrollFactor(0).setDepth(110);
-        this.photo1.setVisible(false);
+        
         this.photo2 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo2').setScrollFactor(0).setDepth(110);
-        this.photo2.setVisible(false);
+        
         this.photo3 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo3').setScrollFactor(0).setDepth(110);
-        this.photo3.setVisible(false);
+        
         this.photo4 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo4').setScrollFactor(0).setDepth(110);
-        this.photo4.setVisible(false);
+        
         /*this.artifact1 = this.physics.add.sprite(144, 300, 'artifact1').setDepth(100);
         this.artifact2 = this.physics.add.sprite(112, 16, 'artifact2').setDepth(100);
         this.artifact3 = this.physics.add.sprite(592, 304, 'artifact3').setDepth(100);
@@ -76,11 +76,15 @@ class PlayScene1 extends Phaser.Scene{
         this.npc2 = this.physics.add.sprite(112, 208, 'npc2').setDepth(100);
         this.npc3 = this.physics.add.sprite(112, 176, 'npc3').setDepth(100);
         this.npc4 = this.physics.add.sprite(432, 320, 'npc4').setDepth(100);
-        this.artifact1 = new Artifacts(this, 144, 310, 'artifact1', this.photo1).setDepth(100);
-        this.artifact2 = new Artifacts(this, 112, 21, 'artifact2', this.photo2).setDepth(100);
-        this.artifact3 = new Artifacts(this, 592, 309, 'artifact3', this.photo3).setDepth(100);
-        this.artifact4 = new Artifacts(this, 432, 325, 'artifact4', this.photo4).setDepth(100);
+        this.artifactGroup = this.add.group({runChildUpdate: true});
+        this.artifact1 = new Artifacts(this, 144, 305, 'artifact1', this.photo1).setDepth(100);
+        this.artifact2 = new Artifacts(this, 112, 16, 'artifact2', this.photo2).setDepth(100);
+        this.artifact3 = new Artifacts(this, 592, 304, 'artifact3', this.photo3).setDepth(100);
+        this.artifact4 = new Artifacts(this, 352, 16, 'artifact4', this.photo4).setDepth(100);
        
+        this.artifactGroup.addMultiple([this.artifact1, this.artifact2, this.artifact3, this.artifact4]);
+        console.log(this.artifactGroup);
+
         this.artifact4.setVisible(false);
 
         this.npc1.setBodySize(32, 32, true).setOrigin(0, 0);
@@ -104,7 +108,7 @@ class PlayScene1 extends Phaser.Scene{
                 alpha: 0.75
         }
 
-        this.count = this.add.text(270, 10, counter + "/8", countConfig).setScrollFactor(0).setDepth(200);
+        this.count = this.add.text(270, 10, this.counter + "/8", countConfig).setScrollFactor(0).setDepth(200);
         
 
 
@@ -175,11 +179,18 @@ class PlayScene1 extends Phaser.Scene{
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         //this.physics.add.overlap(this.cheryl, this.artifact1.body, this.countCheck(this.artifact1));
 
-        this.artifact1.info.setVisible(false);
-        this.physics.add.overlap(this.cheryl, this.artifact1.body, () => {
-            this.countCheck(this.artifact1);
-            this.artifact1.info.setVisible(true);
-        });
+        //this.artifact1.info.setVisible(false);
+        this.physics.add.overlap(this.cheryl, this.artifactGroup, (cheryl, artifact) => {
+            artifact.popUp(this);
+            console.log(artifact.seen);
+            if (artifact.seen == false){
+                artifact.seen = true;
+                console.log(artifact.seen);
+                this.counter += 1;
+                console.log(this.counter)
+            }
+            //artifact.info.setVisible(true);
+        }, null, this);
         
 
     }
@@ -187,7 +198,7 @@ class PlayScene1 extends Phaser.Scene{
     update(){
         this.direction = new Phaser.Math.Vector2(0);
 
-        this.artifact1.info.setVisible(false);
+        //this.artifact1.info.setVisible(false);
         
 
         if (this.cursors.left.isDown){
@@ -216,6 +227,7 @@ class PlayScene1 extends Phaser.Scene{
         //.artifact1.update(this.cheryl);
         //this.countCheck(this.cheryl, this.artifact1);
 
+        this.count.setText(this.counter + "/8");
 
         if(this.counter == 7){
             this.artifact4.setVisible(true);
@@ -231,70 +243,17 @@ class PlayScene1 extends Phaser.Scene{
 
     }
 
-    artifactPopUp(artifact){
-        let info = this.add.text(artifact.x, artifact.y - 16, "E to interact", {
-            color: "#000000",
-            backgroundColor: "#ffffff",
-            //alpha: 0.5,
-            fontSize: 10,
-            
-        }).setOrigin(0.5, 0);
-        info.setDepth(100);
-        info.alpha = 0.5;
-        info.setVisible(false);
-
-        this.physics.add.overlap(this.cheryl, artifact.body, () => {
-            this.countCheck(artifact);
-            info.setVisible(true);
-        });
-    }
+    
 
  
-
+/*
     countCheck(thing){
-        if(keyE.isDown){
-            if(thing == this.artifact1){
-                this.photo1.setVisible(true);
-                if(this.photo1Seen == false){
-                    this.photo1Seen = true;
-                    this.counter += 1;
-                }
-                if(keyESC.isDown){
-                    this.photo1.setVisible(false);
-                }
-                
-            } else if (thing == this.artifact2){
-                this.photo2.setVisible(true);
-                if(this.photo2Seen == false){
-                    this.photo2Seen = true;
-                    this.counter += 1;
-                }
-                if(keyESC.isDown){
-                    this.photo2.setVisible(false);
-                }
-            } else if (thing == this.artifact3){
-                this.photo3.setVisible(true);
-                if(this.photo3Seen == false){
-                    this.photo3Seen = true;
-                    this.counter += 1;
-                }
-                if(keyESC.isDown){
-                    this.photo3.setVisible(false);
-                }
-            } else if (thing == this.artifact4){
-                this.photo4.setVisible(true);
-                if(this.photo4Seen == false){
-                    this.photo4Seen = true;
-                    this.counter += 1;
-                }
-                if(keyESC.isDown){
-                    this.photo4.setVisible(false);
-                }
-            }
-            
+        if (this.thing.seen == false){
+            this.thing.seen = true;
+            this.counter += 1;
         }
         
-    }
+    }*/
 
     
 }
