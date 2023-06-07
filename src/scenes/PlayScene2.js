@@ -1,7 +1,9 @@
 class PlayScene2 extends Phaser.Scene{
     constructor(){
         super({key: 'playScene2'});
-        this.photos = 2;
+        this.photos = 0;
+        this.done = false;
+        this.counter = 0;
 
     }
 
@@ -9,6 +11,8 @@ class PlayScene2 extends Phaser.Scene{
         this.load.spritesheet('background01', './assets/CLITsheet.png', {frameWidth: 320, frameHeight: 240});
         this.load.spritesheet('hold', './assets/holdsheet.png', {frameWidth: 320, frameHeight: 240});
         this.load.image('stand', './assets/CLIT_lookaway.png');
+        this.load.image('bar', './assets/progbar_color.png');
+        this.load.image('prog', './assets/progbar.png');
     
     }
 
@@ -19,24 +23,61 @@ class PlayScene2 extends Phaser.Scene{
         this.cherylStand = this.add.sprite(0, 0, 'stand').setOrigin(0,0);
         this.cherylStand.setVisible(true);
 
+        this.bar = this.add.sprite(20, 187, 'bar').setOrigin(0,0);
+        this.base = this.bar.scaleX;
+        this.prog = this.add.sprite(20, 187, 'prog').setOrigin(0,0);
+
+        let countConfig = {
+            fontFamily: 'Courier',
+                fontSize: '20px',
+                color: '#000000',
+                backgroundColor: ' #ffffff',
+                align: 'center',
+                padding: {
+                    top: 5,
+                    bottom: 5,
+                },
+                alpha: 0.5
+        }
+
+        this.count = this.add.text(30, 10, this.counter + "/4\nphotos", countConfig);
+        this.count.alpha = 0.75;
+
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     }
 
     update(){
+        this.background.setFrame(this.photos);
 
         this.captureImage();
     }
 
     captureImage(){
-        if(keySPACE.isDown){
-            this.cherylStand.setVisible(false);
-            this.cherylHold.setVisible(true);
-            this.cherylHold.setFrame(this.photos);
-        } else {
-            this.cherylHold.setVisible(false);
-            this.cherylStand.setVisible(true);
+        if(this.photos < 4){
+            if(keySPACE.isDown){
+                this.cherylStand.setVisible(false);
+                this.cherylHold.setVisible(true);
+                this.cherylHold.setFrame(this.photos);
+                if(this.done == false){
+                    
+                    this.bar.scaleX += 0.25;
+                    this.bar.x -= 0.75;
+                    if(this.bar.scaleX == 91){
+                        this.done = true;
+                    }
+                } else if (this.done == true){
+                    this.bar.scaleX = this.base;
+                    this.photos += 1;
+                    this.done = false;
+                    this.counter += 1;
+                }
+            } else {
+                this.cherylHold.setVisible(false);
+                this.cherylStand.setVisible(true);
+            }
         }
+        
     }
 
 }    
