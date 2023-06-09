@@ -37,7 +37,7 @@ class PlayScene1 extends Phaser.Scene{
 
     create(){
 
-        //this.scene.start('playScene2');
+        this.scene.start('playScene2');
 
         this.counter = 0;
         const map = this.add.tilemap('tilemapJSON');
@@ -104,6 +104,7 @@ class PlayScene1 extends Phaser.Scene{
         console.log(this.artifactGroup);
 
         this.artifact4.setVisible(false);
+        this.artifact4.disableBody(true);
 
         this.npc1.setBodySize(32, 32, true).setOrigin(0, 0);
         this.npc2.setBodySize(32, 32, true).setOrigin(0, 0);
@@ -261,6 +262,8 @@ class PlayScene1 extends Phaser.Scene{
 
         if(this.counter == 7){
             this.artifact4.setVisible(true);
+            this.artifact4.enableBody(true);
+            this.artifact4.setPosition(352, 16);
         }
 
         if(this.counter == 8){
