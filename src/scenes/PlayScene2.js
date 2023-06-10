@@ -9,7 +9,7 @@ class PlayScene2 extends Phaser.Scene{
 
     preload(){
         this.load.spritesheet('background01', './assets/CLITsheet (1).png', {frameWidth: 320, frameHeight: 240});
-        this.load.spritesheet('hold', './assets/holdsheet.png', {frameWidth: 320, frameHeight: 240});
+        this.load.spritesheet('hold', './assets/holdsheet(1).png', {frameWidth: 320, frameHeight: 240});
         this.load.image('stand', './assets/CLIT_lookaway.png');
         this.load.image('bar', './assets/progbar_color.png');
         this.load.image('prog', './assets/progbar.png');
