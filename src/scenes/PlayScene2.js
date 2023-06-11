@@ -58,27 +58,21 @@ class PlayScene2 extends Phaser.Scene{
 
         this.count = this.add.text(20, 10, this.counter + "/4\nphotos", countConfig);
         this.count.alpha = 0.75;
-
-        // Create a new path
-        this.path = new Phaser.Curves.Path();
-
-        // Define the points of the path
-        const startPoint = new Phaser.Math.Vector2(50, 0);
-        const endPoint = new Phaser.Math.Vector2(0, 0);
-
-        // Add the points to the path
-        this.path.moveTo(startPoint.x, startPoint.y);
-        this.path.lineTo(endPoint.x, endPoint.y);
-
-
-        // Add the sprite as a follower to the path
-        this.follower = this.add.follower(this.path, 70, 0, 'enemy').setOrigin(0,0).setDepth(100);
-
         
         
         
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+
+        this.time.addEvent({
+            delay: Phaser.Math.Between(2000, 8000),
+            repeat: -1,
+            callback: () => {
+                console.log('warning');
+                this.warning();
+            }
+        });
+
 
     }
 
@@ -88,8 +82,8 @@ class PlayScene2 extends Phaser.Scene{
         this.captureImage();
         this.count.setText(this.counter + "/4\nphotos")
 
-        this.enemyAttack();
-        console.log(this.follower.x);
+        //this.warning(this.warn);
+        
         if(this.gameover == true){
             this.lost.setVisible(true);
             
@@ -158,45 +152,26 @@ class PlayScene2 extends Phaser.Scene{
         
     }
 
-    enemyAttack(){
-        this.time.delayedCall(250, () => {
-            this.warn.setVisible(true);
-        });
-        
-        this.time.delayedCall(250, () => {
-            this.warn.setVisible(true);
-        });
-        this.time.delayedCall(250, () => {
-            this.warn.setVisible(false);
-        });
-        this.time.delayedCall(250, () => {
-            this.warn.setVisible(true);
-        });
-        this.time.delayedCall(250, () => {
-            this.warn.setVisible(false);
-        });
-
-        //set properties of follower
-        this.follower.startFollow({
-            duration: 5000,
-            yoyo: true,
-            repeat: 0,
-            rotateToPath: false,
-            rotationOffset: 0,
-            verticalAdjust: false,
-            delay: Math.random(1000, 2500)
-        });
-        
-
-        if(this.follower.x < 70){
-            if(keySPACE.isDown){
-                this.scene.pause();
-            }
+    toggleVisibility(sprite){
+        if (sprite.visible == false){
+            sprite.setVisible(true);
+        } else if (sprite.visible = true){
+            sprite.setVisible(false);
         }
+    }
 
-        
-
-        
+    warning(){
+        this.time.addEvent({
+            delay: 250,
+            repeat: 5,
+            callback: () => {
+                if (this.warn.visible == false){
+                    this.warn.setVisible(true);
+                } else if (this.warn.visible = true){
+                    this.warn.setVisible(false);
+                }
+            }
+        });
     }
 
 }    
