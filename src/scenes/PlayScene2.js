@@ -64,6 +64,15 @@ class PlayScene2 extends Phaser.Scene{
 
         this.attack = this.add.follower(this.enemyMove, 405, 120, 'enemy');
 
+        this.info = this.add.text(8, 160, 'Press SPACEBAR to film lost photos of Fae Richards!\nBut don\'t get caught by the archivist!', {
+            fontSize: 10,
+            color: '#000000',
+            backgroundColor: '#ffffff',
+            alpha: 0.5,
+            align: 'center'
+
+        }).setAlpha(0.75);
+
         
         
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -102,15 +111,17 @@ class PlayScene2 extends Phaser.Scene{
             this.lost.setVisible(true);
             this.scene.pause();
             if(keyENTER.isDown){
-                this.scene.start('playScene1');
                 this.scene.stop();
+                this.scene.start('playScene1');
+                
             }
         } else if (this.counter == 4){
             found = true;
             this.win.setVisible(true);
             if(keyENTER.isDown){
-                this.scene.start('playScene1');
                 this.scene.stop();
+                this.scene.start('playScene1');
+                
             }
 
         }

@@ -37,7 +37,7 @@ class PlayScene1 extends Phaser.Scene{
 
     create(){
 
-        this.scene.start('playScene2');
+        //this.scene.start('playScene2');
 
         this.counter = 0;
         const map = this.add.tilemap('tilemapJSON');
@@ -110,6 +110,13 @@ class PlayScene1 extends Phaser.Scene{
         this.npc2.setBodySize(32, 32, true).setOrigin(0, 0);
         this.npc3.setBodySize(32, 32, true).setOrigin(0, 0);
         this.npc4.setBodySize(32, 32, true).setOrigin(0, 0);
+
+        this.information = this.add.text(20, 20, 'Use ARROWKEYS \nto move', {
+            fontSize: 10,
+            color: '#ffffff',
+            align: 'center'
+
+        }).setScrollFactor(0).setDepth(500);
 
         
         

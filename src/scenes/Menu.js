@@ -15,9 +15,13 @@ class Menu extends Phaser.Scene {
 
         this.select = 0;
         this.background = this.add.sprite(0, 0, 'background').setOrigin(0,0);
-        this.play = this.add.sprite(210, 35, 'play', 0).setOrigin(0.5, 0.5);
-        this.credits = this.add.sprite(210, 80, 'credits', 0).setOrigin(0.5, 0.5);
+        this.play = this.add.sprite(210, 25, 'play', 0).setOrigin(0.5, 0.5);
+        this.credits = this.add.sprite(210, 60, 'credits', 0).setOrigin(0.5, 0.5);
+        this.instruct = this.add.text(80, 80, '        Use UP and DOWN arrowkeys\n       to select an option. Press \n     ENTER to proceed.', {
+            fontSize: 10,
+            color: '#ffffff',
 
+        });
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
