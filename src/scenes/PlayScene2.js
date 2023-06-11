@@ -59,6 +59,11 @@ class PlayScene2 extends Phaser.Scene{
         this.count = this.add.text(20, 10, this.counter + "/4\nphotos", countConfig);
         this.count.alpha = 0.75;
         
+        //make enemy movement path
+        this.enemyMove = this.add.path(405, 120).lineTo(160, 120);
+
+        this.attack = this.add.follower(this.enemyMove, 405, 120, 'enemy');
+
         
         
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -70,6 +75,13 @@ class PlayScene2 extends Phaser.Scene{
             callback: () => {
                 console.log('warning');
                 this.warning();
+                this.attack.startFollow({
+                    x: 405,
+                    duration: 3000,
+                    yoyo: true,
+                    ease: 'Quart.easeInOut'
+                });
+                
             }
         });
 
@@ -83,10 +95,16 @@ class PlayScene2 extends Phaser.Scene{
         this.count.setText(this.counter + "/4\nphotos")
 
         //this.warning(this.warn);
+        //checking location and keypress
+        this.getCaught();
         
         if(this.gameover == true){
             this.lost.setVisible(true);
-            
+            this.scene.pause();
+            if(keyENTER.isDown){
+                this.scene.start('playScene1');
+                this.scene.stop();
+            }
         } else if (this.counter == 4){
             found = true;
             this.win.setVisible(true);
@@ -152,11 +170,12 @@ class PlayScene2 extends Phaser.Scene{
         
     }
 
-    toggleVisibility(sprite){
-        if (sprite.visible == false){
-            sprite.setVisible(true);
-        } else if (sprite.visible = true){
-            sprite.setVisible(false);
+    getCaught(){
+        if(this.attack.x < 220){
+            if(keySPACE.isDown){
+                this.gameover = true;
+            }
+            
         }
     }
 
