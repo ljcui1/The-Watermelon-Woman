@@ -278,8 +278,13 @@ class PlayScene1 extends Phaser.Scene{
             if (this.cheryl.y < 0){
                 this.scene.start('playScene2');
             }
-            this.instruct.setText('^\nproceed');
-            this.instruct.setPosition(10);
+            this.proceed = this.add.text(game.config.width/2, 15, '↑\nproceed', {
+                fontSize: 15,
+                color: '#ffffff',
+                align: 'center',
+
+
+            }).setOrigin(0.5, 0.5).setDepth(500);
         }
         
 

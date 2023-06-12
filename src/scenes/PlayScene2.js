@@ -62,7 +62,9 @@ class PlayScene2 extends Phaser.Scene{
         //make enemy movement path
         this.enemyMove = this.add.path(405, 120).lineTo(160, 120);
 
-        this.attack = this.add.follower(this.enemyMove, 405, 120, 'enemy');
+        //this.attack = this.add.follower(this.enemyMove, 405, 120, 'enemy');
+
+        this.attack = this.add.sprite(405, 120, 'enemy');
 
         this.info = this.add.text(8, 160, 'Press SPACEBAR to film lost photos of Fae Richards!\nBut don\'t get caught by the archivist!', {
             fontSize: 10,
@@ -77,7 +79,7 @@ class PlayScene2 extends Phaser.Scene{
         
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-
+/*
         this.time.addEvent({
             delay: Phaser.Math.Between(2000, 8000),
             repeat: -1,
@@ -95,6 +97,28 @@ class PlayScene2 extends Phaser.Scene{
         });
 
 
+        */
+
+        this.time.addEvent({
+            delay: Phaser.Math.Between(2000, 8000),
+            repeat: -1,
+            callback: () => {
+                console.log('warning');
+                this.warning();
+                
+                this.tweens.add({
+                    delay: 1000,
+                    targets: this.attack,
+                    x: 160,
+                    duration: 1000,
+                    yoyo: true,
+                    hold: 1000,
+                    ease: 'Quart.easeInOut'
+                });
+            }
+        })
+
+
     }
 
     update(){
@@ -109,10 +133,9 @@ class PlayScene2 extends Phaser.Scene{
         
         if(this.gameover == true){
             this.lost.setVisible(true);
-            this.scene.pause();
             if(keyENTER.isDown){
                 this.scene.stop();
-                this.scene.start('playScene1');
+                this.scene.start('playScene3');
                 
             }
         } else if (this.counter == 4){
