@@ -1,6 +1,6 @@
-class PlayScene1 extends Phaser.Scene{
+class PlayScene3 extends Phaser.Scene{
     constructor(){
-        super({key: 'playScene1'})
+        super({key: 'playScene3'})
 
         this.VEL = 100;
         this.photo1Seen = false;

@@ -143,7 +143,7 @@ class PlayScene2 extends Phaser.Scene{
             this.win.setVisible(true);
             if(keyENTER.isDown){
                 this.scene.stop();
-                this.scene.start('playScene1');
+                this.scene.start('playScene4');
                 
             }
 

@@ -17,7 +17,7 @@ let config = {
         }
     },
     zoom: 2,
-    scene: [ Menu, PlayScene1, PlayScene2 ],
+    scene: [ Menu, PlayScene1, PlayScene2, PlayScene3, PlayScene4 ],
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
