@@ -32,12 +32,18 @@ class PlayScene1 extends Phaser.Scene{
         this.load.image('photo2', 'photo2.png');
         this.load.image('photo3', 'photo3.png');
         this.load.image('photo4', 'photo4.png');
+        this.load.audio('background1', 'hotmusic.mp3');
 
     }
 
     create(){
 
         //this.scene.start('playScene2');
+
+        this.backgroundMusic = this.sound.add('background1', {volume: 0.1});
+        this.backgroundMusic.setLoop(true);
+        this.backgroundMusic.play();
+
 
         this.counter = 0;
         const map = this.add.tilemap('tilemapJSON');

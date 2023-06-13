@@ -4,13 +4,13 @@ class Credits extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('page', './assets/credits2.png');
+        this.load.image('page', './assets/credits1.png');
     }
 
     create(){
         this.page = this.add.tileSprite(0, 0, 320, 240, 'page').setOrigin(0, 0);
 
-        this.leave = this.add.text(20, 10, 'ESC to leave', {
+        this.leave = this.add.text(5, 5, 'ESC \nto \nleave', {
             fontSize: 15,
             color: '#ffffff',
             align: 'center',

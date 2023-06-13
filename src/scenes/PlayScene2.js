@@ -18,10 +18,16 @@ class PlayScene2 extends Phaser.Scene{
         this.load.image('prog', './assets/progbar.png');
         this.load.image('lost', './assets/CLIT_lose.png');
         this.load.image('win', './assets/CLIT_win.png');
+        this.load.audio('background2', './assets/lowdowndirtybusiness.mp3');
     
     }
 
     create(){
+
+        this.backgroundMusic = this.sound.add('background2', {volume: 0.1});
+        this.backgroundMusic.setLoop(true);
+        this.backgroundMusic.play();
+
         this.background = this.add.sprite(0, 0, 'background01', 0).setOrigin(0,0);
         this.cherylHold = this.add.sprite(0, 0, 'hold', 0).setOrigin(0,0);
         this.cherylHold.setVisible(false);
