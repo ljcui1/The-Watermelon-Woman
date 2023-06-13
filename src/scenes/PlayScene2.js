@@ -100,7 +100,7 @@ class PlayScene2 extends Phaser.Scene{
         */
 
         this.time.addEvent({
-            delay: Phaser.Math.Between(2000, 8000),
+            delay: Phaser.Math.Between(2000, 5000),
             repeat: -1,
             callback: () => {
                 console.log('warning');

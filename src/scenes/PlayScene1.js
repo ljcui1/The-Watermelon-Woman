@@ -151,6 +151,17 @@ class PlayScene1 extends Phaser.Scene{
         });
 
         this.anims.create({
+            key:'runBack',
+            frames: this.anims.generateFrameNames('cheryl', {
+                prefix: 'cheryl_back',
+                start: 1,
+                end: 4,
+            }),
+            frameRate: 6,
+            repeat: -1
+        });
+
+        this.anims.create({
             key:'runSide',
             frames: this.anims.generateFrameNames('cheryl', {
                 prefix: 'cheryl_side',
@@ -249,7 +260,7 @@ class PlayScene1 extends Phaser.Scene{
             this.cheryl.anims.play('runSide', true);
         } else if (this.cursors.up.isDown){
             this.direction.y = -1;
-            this.cheryl.anims.play('runFront', true);
+            this.cheryl.anims.play('runBack', true);
         } else if (this.cursors.down.isDown){
             this.direction.y = 1;
             this.cheryl.anims.play('runFront', true);
@@ -278,7 +289,7 @@ class PlayScene1 extends Phaser.Scene{
             if (this.cheryl.y < 0){
                 this.scene.start('playScene2');
             }
-            this.proceed = this.add.text(game.config.width/2, 15, '↑\nproceed', {
+            this.proceed = this.add.text(352, 15, '↑\nproceed', {
                 fontSize: 15,
                 color: '#ffffff',
                 align: 'center',

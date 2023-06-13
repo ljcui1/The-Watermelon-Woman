@@ -49,6 +49,9 @@ class Menu extends Phaser.Scene {
                 this.play.setFrame(1);
                 this.credits.setFrame(0);
                 console.log(this.select);
+            }else if (Phaser.Input.Keyboard.JustDown(keyENTER)){
+                this.scene.launch('creditScene');
+                this.scene.pause();
             }
         }
 

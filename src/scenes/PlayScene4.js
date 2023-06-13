@@ -28,10 +28,10 @@ class PlayScene4 extends Phaser.Scene{
         this.load.image('npc2', 'npc2.png');
         this.load.image('npc3', 'npc3.png');
         this.load.image('npc4', 'npc4.png');
-        this.load.image('photo1', 'photo_win1.png');
-        this.load.image('photo2', 'photo_win2.png');
-        this.load.image('photo3', 'photo_win3.png');
-        this.load.image('photo4', 'photo_win4.png');
+        this.load.image('win1', 'photo_win1.png');
+        this.load.image('win2', 'photo_win2.png');
+        this.load.image('win3', 'photo_win3.png');
+        this.load.image('win4', 'photo_win4.png');
 
     }
 
@@ -70,13 +70,13 @@ class PlayScene4 extends Phaser.Scene{
         const spawn = map.findObject('Spawn', obj => obj.name === 'Spawn');
 
         this.cheryl = this.physics.add.sprite(360, 470, 'cheryl', 0).setDepth(40);
-        this.photo1 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo1').setScrollFactor(0).setDepth(110);
+        this.photo1 = this.add.sprite(game.config.width/2, game.config.height/2, 'win1').setScrollFactor(0).setDepth(110);
         
-        this.photo2 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo2').setScrollFactor(0).setDepth(110);
+        this.photo2 = this.add.sprite(game.config.width/2, game.config.height/2, 'win2').setScrollFactor(0).setDepth(110);
         
-        this.photo3 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo3').setScrollFactor(0).setDepth(110);
+        this.photo3 = this.add.sprite(game.config.width/2, game.config.height/2, 'win3').setScrollFactor(0).setDepth(110);
         
-        this.photo4 = this.add.sprite(game.config.width/2, game.config.height/2, 'photo4').setScrollFactor(0).setDepth(110);
+        this.photo4 = this.add.sprite(game.config.width/2, game.config.height/2, 'win4').setScrollFactor(0).setDepth(110);
         
         /*this.artifact1 = this.physics.add.sprite(144, 300, 'artifact1').setDepth(100);
         this.artifact2 = this.physics.add.sprite(112, 16, 'artifact2').setDepth(100);
@@ -143,6 +143,17 @@ class PlayScene4 extends Phaser.Scene{
             key:'runFront',
             frames: this.anims.generateFrameNames('cheryl', {
                 prefix: 'cheryl',
+                start: 1,
+                end: 4,
+            }),
+            frameRate: 6,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key:'runBack',
+            frames: this.anims.generateFrameNames('cheryl', {
+                prefix: 'cheryl_back',
                 start: 1,
                 end: 4,
             }),
@@ -249,7 +260,7 @@ class PlayScene4 extends Phaser.Scene{
             this.cheryl.anims.play('runSide', true);
         } else if (this.cursors.up.isDown){
             this.direction.y = -1;
-            this.cheryl.anims.play('runFront', true);
+            this.cheryl.anims.play('runBack', true);
         } else if (this.cursors.down.isDown){
             this.direction.y = 1;
             this.cheryl.anims.play('runFront', true);
@@ -276,9 +287,9 @@ class PlayScene4 extends Phaser.Scene{
         if(this.counter == 8){
             this.physics.world.setBounds(0, 0, 624, 464, true, true, false, true);
             if (this.cheryl.y < 0){
-                this.scene.start('playScene2');
+                this.scene.start('menuScene');
             }
-            this.proceed = this.add.text(game.config.width/2, 15, '↑\nproceed', {
+            this.proceed = this.add.text(352, 15, '↑\nproceed', {
                 fontSize: 15,
                 color: '#ffffff',
                 align: 'center',

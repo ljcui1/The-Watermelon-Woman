@@ -13,11 +13,11 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true
+            //debug: true
         }
     },
     zoom: 2,
-    scene: [ Menu, PlayScene1, PlayScene2, PlayScene3, PlayScene4 ],
+    scene: [ Menu, PlayScene1, PlayScene2, PlayScene3, PlayScene4, Credits ],
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
